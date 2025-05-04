@@ -1,0 +1,23 @@
+{
+  "name": "asyncapi-kotlin-kafka-template",
+  "version": "1.0",
+  "description": "Custom Template",
+  "generator": {
+    "supportedProtocols": [
+      "kafka"
+    ],
+    "parameters": {
+      "packageName": {
+        "description": "Base package name",
+        "default": "ru.romanow",
+        "required": false
+      }
+    }
+  },
+  "dependencies": {
+    "nunjucks": "^3.2.4",
+    "@asyncapi/generator-filters": "^2.1.0",
+    "@asyncapi/generator-hooks": "^0.1.0",
+    "lodash": "^4.17.21"
+  }
+}

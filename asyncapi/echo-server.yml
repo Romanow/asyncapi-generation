@@ -1,0 +1,49 @@
+asyncapi: '2.6.0'
+info:
+  title: Echo Service
+  version: '1.0'
+  description: |
+    Простейший echo-сервер. Получает сообщение из топика `echo.request`
+    и публикует его обратно в `echo.response`.
+
+servers:
+  kafkaBroker:
+    url: localhost:9092
+    protocol: kafka
+    description: Kafka брокер
+
+channels:
+  echo.request:
+    description: Топик входящих echo-запросов
+    subscribe:
+      summary: Получение echo-запроса
+      operationId: receiveEchoRequest
+      message:
+        $ref: '#/components/messages/EchoMessage'
+
+  echo.response:
+    description: Топик исходящих echo-ответов
+    publish:
+      summary: Публикация echo-ответа
+      operationId: sendEchoResponse
+      message:
+        $ref: '#/components/messages/EchoMessage'
+
+components:
+  schemas:
+    EchoMessage:
+      additionalProperties: false
+      type: object
+      properties:
+        message:
+          type: string
+          description: Текст сообщения
+      required:
+        - message
+
+  messages:
+    EchoMessage:
+      summary: Простое эхо-сообщение
+      contentType: 'application/json'
+      payload:
+        ref: '#/components/schemas/EchoMessage'
