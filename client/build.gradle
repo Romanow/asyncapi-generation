@@ -1,0 +1,32 @@
+plugins {
+    id "org.springframework.boot"
+    id "org.jetbrains.kotlin.plugin.spring"
+}
+
+dependencies {
+    implementation "org.springframework.kafka:spring-kafka"
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework.boot:spring-boot-starter-logging"
+    implementation "org.springframework.shell:spring-shell-starter"
+
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.testcontainers:kafka:$testContainersVersion"
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir "${buildDir}/generated/src/main/kotlin"
+        }
+    }
+}
+
+bootJar {
+    archiveFileName = "${project.name}.jar"
+}
+
+jar {
+    enabled = false
+}

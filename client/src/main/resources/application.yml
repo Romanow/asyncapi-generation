@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: asyncapi-generation-client
+  profiles:
+    active: local
+  config:
+    import: optional:git.properties
+  shell:
+    history:
+      enabled: false
+    interactive:
+      enabled: true

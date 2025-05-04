@@ -1,0 +1,50 @@
+plugins {
+    id "org.springframework.boot"
+    id "org.jetbrains.kotlin.plugin.spring"
+    id "com.gorylenko.gradle-git-properties"
+}
+
+dependencies {
+    implementation "org.springframework.kafka:spring-kafka"
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework.boot:spring-boot-starter-logging"
+
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.testcontainers:kafka:$testContainersVersion"
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir "${buildDir}/generated/src/main/kotlin"
+        }
+    }
+}
+
+gitProperties {
+    dateFormat = "dd.MM.yyyy HH:mm:ss"
+    dateFormatTimeZone = "Europe/Moscow"
+    extProperty = "gitProps"
+}
+
+generateGitProperties.outputs.upToDateWhen { false }
+
+bootJar {
+    archiveFileName = "${project.name}.jar"
+
+    manifest {
+        attributes(
+            "Application-Name": "${project.name}",
+            "Application-Version": "${project.version}",
+            "Git-Branch": "${-> project.ext.gitProps["git.branch"]}",
+            "Build-Revision": "${-> project.ext.gitProps["git.commit.id.abbrev"]}",
+            "Commit-Time": "${-> project.ext.gitProps["git.commit.time"]}"
+        )
+    }
+}
+
+jar {
+    enabled = false
+}

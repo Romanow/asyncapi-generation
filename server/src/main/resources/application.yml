@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: asyncapi-generation-server
+  profiles:
+    active: local
+  config:
+    import: optional:git.properties
